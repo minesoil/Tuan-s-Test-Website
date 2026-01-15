@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Justin's Coding Portfolio</title>
+    <meta name="description" content="Justin — student and programmer showcasing robotics, web projects, and experiments. Built with HTML & CSS." />
+    <link rel="icon" href="/favicon.ico" />
 
     <style>
         /* ===== Reset & Base Styles ===== */
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
         }
 
         body {
+            margin: 0;
             background-color: #0f172a;
             color: #e5e7eb;
             line-height: 1.6;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         a {
@@ -25,11 +32,46 @@
             text-decoration: none;
         }
 
-        a:hover {
+        a:hover,
+        a:focus {
             text-decoration: underline;
         }
 
-        /* ===== Header ===== */
+        /* Visible focus for keyboard users */
+        :focus {
+            outline: 3px solid rgba(56,189,248,0.35);
+            outline-offset: 2px;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* ===== Layout ===== */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            padding: 8px 12px;
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
         header {
             background: linear-gradient(135deg, #2563eb, #38bdf8);
             padding: 40px 20px;
@@ -37,16 +79,16 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2.25rem;
+            margin-bottom: 6px;
         }
 
         header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1.05rem;
+            opacity: 0.95;
+            margin: 0;
         }
 
-        /* ===== Main Layout ===== */
         main {
             max-width: 1000px;
             margin: 40px auto;
@@ -58,18 +100,16 @@
         }
 
         section h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 20px;
             border-left: 5px solid #38bdf8;
             padding-left: 10px;
         }
 
-        /* ===== About ===== */
         .about p {
             max-width: 700px;
         }
 
-        /* ===== Projects ===== */
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -81,10 +121,11 @@
             border: 1px solid #1e293b;
             border-radius: 10px;
             padding: 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .project-card:hover {
+        .project-card:hover,
+        .project-card:focus-within {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
@@ -96,105 +137,121 @@
         .project-card p {
             font-size: 0.95rem;
             margin-bottom: 15px;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .project-links a {
             margin-right: 15px;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        /* ===== Footer ===== */
         footer {
             text-align: center;
             padding: 30px 20px;
             background-color: #020617;
             border-top: 1px solid #1e293b;
             font-size: 0.9rem;
-            opacity: 0.8;
+            opacity: 0.9;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+            section h2 {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- ===== Header ===== -->
-    <header>
+    <header role="banner">
         <h1>Justin</h1>
         <p>Student • Programmer • Robotics & Web Projects</p>
     </header>
 
     <!-- ===== Main Content ===== -->
-    <main>
+    <main id="main" role="main">
 
         <!-- About Section -->
-        <section class="about">
-            <h2>About Me</h2>
+        <section class="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">About Me</h2>
             <p>
                 Hi! I'm Justin, a student who enjoys programming, robotics, and building
-                useful (and sometimes fun) projects. This website is where I showcase
-                my coding work, experiments, and ongoing projects.
+                useful (and sometimes fun) projects. This website showcases my coding work,
+                experiments, and ongoing projects.
             </p>
         </section>
 
         <!-- Projects Section -->
-        <section>
-            <h2>Projects</h2>
+        <section aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects</h2>
 
             <div class="projects">
 
                 <!-- Project 1 -->
-                <div class="project-card">
-                    <h3>FRC Scouting App</h3>
+                <article class="project-card" aria-labelledby="proj1-title">
+                    <h3 id="proj1-title">FRC Scouting App</h3>
                     <p>
-                        I will work on the 2026 FRC Rebuilt scouting app with a senior
-                        Below is the scanner, as well as the main scouting app
+                        I'm working on the 2026 FRC Rebuilt scouting app with a senior team member.
+                        Below are links to the scanner and the main scouting app.
                     </p>
                     <div class="project-links">
-                        <a href="https://scanner-five-mu.vercel.app/"> The scanner for getting the inputs </a>
-                        <a href="https://frc-ivory.vercel.app/"> The main scouting app for inputs(WIP)</a>
+                        <a href="https://scanner-five-mu.vercel.app/" target="_blank" rel="noopener noreferrer">Scanner (input collection)</a>
+                        <a href="https://frc-ivory.vercel.app/" target="_blank" rel="noopener noreferrer">Main scouting app (WIP)</a>
                     </div>
-                </div>
+                </article>
 
                 <!-- Project 2 -->
-                <div class="project-card">
-                    <h3>Arduino Birthday Display</h3>
+                <article class="project-card" aria-labelledby="proj2-title">
+                    <h3 id="proj2-title">Arduino Birthday Display</h3>
                     <p>
-                        Arduino project with 7-segment displays and LCD animations
-                        triggered by a button.
+                        Arduino project with 7-segment displays and LCD animations triggered by a button.
                     </p>
                     <div class="project-links">
-                        <a href="#">GitHub</a>
+                        <!-- Replace # with your real repository URL -->
+                        <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </div>
-                </div>
+                </article>
 
                 <!-- Project 3 -->
-                <div class="project-card">
-                    <h3>Personal Website</h3>
+                <article class="project-card" aria-labelledby="proj3-title">
+                    <h3 id="proj3-title">Personal Website</h3>
                     <p>
-                        This website! Built using only HTML and CSS and hosted on GitHub Pages.
+                        This website — built using only HTML and CSS and hosted on GitHub Pages.
                     </p>
                     <div class="project-links">
-                        <a href="#">Source Code</a>
+                        <!-- Replace # with the source code URL for this site -->
+                        <a href="#" target="_blank" rel="noopener noreferrer">Source Code</a>
                     </div>
-                </div>
+                </article>
 
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section>
-            <h2>Contact</h2>
+        <section aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact</h2>
             <p>
                 You can find me on
-                <a href="https://github.com/">GitHub</a>
+                <a href="https://github.com/minesoil" target="_blank" rel="noopener noreferrer">GitHub</a>
                 or reach out via email.
             </p>
+            <address>
+                <!-- Replace with your real email -->
+                <a href="mailto:yourname@example.com">yourname@example.com</a>
+            </address>
         </section>
 
     </main>
 
     <!-- ===== Footer ===== -->
-    <footer>
+    <footer role="contentinfo">
         © 2026 Justin • Built with HTML & CSS
     </footer>
 
